@@ -33,7 +33,7 @@ class table:
         }).execute()
         spreadsheetId = spreadsheet['spreadsheetId'] # сохраняем идентификатор файла
         print('https://docs.google.com/spreadsheets/d/' + spreadsheetId)
-
+        
 
 
         driveService = apiclient.discovery.build('drive', 'v3', http = self.httpAuth) # Выбираем работу с Google Drive и 3 версию API
