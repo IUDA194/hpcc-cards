@@ -3,8 +3,12 @@ import httplib2
 from googleapiclient.discovery import build
 import googleapiclient as apiclient
 from oauth2client.service_account import ServiceAccountCredentials	
+import os
+
+
 
 class table:
+    path = os.path.abspath('fillblankskhpcc-af87115fa496.json')
     
     spreadsheetId = "1rbQe4whW1oz5EOnjjfhPMzmIme-4N9lx8o1hSzOtNgM"
     
@@ -15,7 +19,7 @@ class table:
     credentials = None
     
     def __init__(self) -> None:
-        CREDENTIALS_FILE = 'fillblankskhpcc-af87115fa496.json'  # Имя файла с закрытым ключом, вы должны подставить свое
+        CREDENTIALS_FILE = self.path  # Имя файла с закрытым ключом, вы должны подставить свое
 
         # Читаем ключи из файла
         self.credentials = ServiceAccountCredentials.from_json_keyfile_name(CREDENTIALS_FILE, ['https://www.googleapis.com/auth/spreadsheets', 'https://www.googleapis.com/auth/drive'])
@@ -74,11 +78,11 @@ class table:
                                     "programm" : row[7],
                                     "ladder" : row[8],
                                     "form" : row[9], 
-                                    "added" : row[10], 
-                                    "offer" : row[11],
-                                    "head" : row[12],
-                                    "ansver" : row[13],
-                                    "terpila" : row[14],
+                                    "zarahuv" : row[10],
+                                    "dogovor_s_djavolom" : row[11],
+                                    "zavid_otdela" : row[12],
+                                    "vidpovidalna": row[13],
+                                    "zdobuvach": row[14],
                                     "pain_of_programming" : row[15],
                                     "pain_of_programming_mark" : row[16],
                                     "pain_of_db" : row[17],
@@ -93,10 +97,24 @@ class table:
                                     "dungeon_master" : row[26],
                                     "friends_of_dungeon_master" : row[27],
                                     "data_of_mastering" : row[28],
-                                    "episode" : row[29],
-                                    "nomber" : row[30],
-                                    "end_slaving_date" : row[31],
-                                    "z_vidznakoy" : row[32]}}
+                                    "seriya" : row[29],
+                                    "z_vidznakoy" : row[30],
+                                    "navch1" : row[31],
+                                    "mark_navch1" : row[32],
+                                    "navch2" : row[33],
+                                    "mark_navch2" : row[34],
+                                    "navch3" : row[35],
+                                    "mark_navch3" : row[36],
+                                    "navch4" : row[37],
+                                    "mark_navch4" : row[38],
+                                    "navch5" : row[39],
+                                    "mark_navch5" : row[40],
+                                    "navch6" : row[41],
+                                    "mark_navch6" : row[42],
+                                    
+                                    
+                                    
+                                    }}
         
         return sorted_data
             
