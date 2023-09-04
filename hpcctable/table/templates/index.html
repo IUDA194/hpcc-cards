@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Таблица данных</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <table id="data-table">
+        <thead>
+            <tr>
+                <th><input type="text" id="sort-name" placeholder="Сортировать по имени"></th>
+                <th><input type="text" id="sort-group" placeholder="Сортировать по группе"></th>
+                <!-- Добавьте другие заголовки таблицы здесь -->
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Сюда будет вставлена таблица данных -->
+        </tbody>
+    </table>
+
+    <script>
+        $(document).ready(function() {
+            var jsonData = {}; // Переменная для хранения загруженных данных
+
+            // Функция для загрузки данных из GET-запроса
+            function loadData() {
+                $.get('http://127.0.0.1:8000/getalldata/', function(data) {
+                    jsonData = data; // Сохраняем загруженные данные
+                    updateTable();
+                });
+            }
+
+            // Функция для обновления таблицы с учетом фильтрации и сортировки
+            function updateTable() {
+                var filterName = $('#sort-name').val().toLowerCase();
+                var filterGroup = $('#sort-group').val().toLowerCase();
+                var tableBody = $('#data-table tbody');
+                tableBody.empty(); // Очищаем текущее содержимое таблицы
+
+                // Преобразуем данные в массив объектов для сортировки
+                var dataArray = [];
+                for (var key in jsonData) {
+                    var rowData = jsonData[key];
+                    dataArray.push(rowData);
+                }
+
+                // Сортируем данные по имени
+                dataArray.sort(function(a, b) {
+                    var nameA = a.name.toLowerCase();
+                    var nameB = b.name.toLowerCase();
+                    return nameA.localeCompare(nameB);
+                });
+
+                // Создаем строки таблицы с учетом фильтрации и сортировки
+                dataArray.forEach(function(rowData) {
+                    var name = rowData.name.toLowerCase();
+                    var group = rowData.group.toLowerCase();
+
+                    if (name.includes(filterName) && group.includes(filterGroup)) {
+                        var row = $('<tr>');
+
+                        // Добавляем все доступные поля из объекта данных
+                        for (var cell in rowData) {
+                            row.append('<td>' + rowData[cell] + '</td>');
+                        }
+
+                        tableBody.append(row);
+                    }
+                });
+            }
+
+            // Вызываем функцию загрузки данных при загрузке страницы
+            loadData();
+
+            // Обработчики событий для сортировки
+            $('#sort-name').on('input', function() {
+                updateTable();
+            });
+
+            $('#sort-group').on('input', function() {
+                updateTable();
+            });
+        });
+    </script>
+</body>
+</html>
