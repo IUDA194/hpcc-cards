@@ -2,10 +2,10 @@ from django.shortcuts import render
 from .main import table
 from django.http import JsonResponse
 
-def adminn(request):
-    return render(request, "index.html")
 
-def get_all_data(request):
+
+# def get_all_data(request):
+
     #СОРТИРОВКА ПО ИМЕНИ
     # result = table().get_data()
 
