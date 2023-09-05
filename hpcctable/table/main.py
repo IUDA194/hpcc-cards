@@ -9,58 +9,35 @@ import os
 
 class table:
     path = os.path.abspath('fillblankskhpcc-af87115fa496.json')
-    
     spreadsheetId = "1rbQe4whW1oz5EOnjjfhPMzmIme-4N9lx8o1hSzOtNgM"
-    
-    ranges = "A1:AX50"
     
     service = None
     httpAuth = None
     credentials = None
-    
+    sheet_name = None
+
     def __init__(self) -> None:
         CREDENTIALS_FILE = self.path  # Имя файла с закрытым ключом, вы должны подставить свое
-
+        
         # Читаем ключи из файла
         self.credentials = ServiceAccountCredentials.from_json_keyfile_name(CREDENTIALS_FILE, ['https://www.googleapis.com/auth/spreadsheets', 'https://www.googleapis.com/auth/drive'])
 
         self.httpAuth = self.credentials.authorize(httplib2.Http()) # Авторизуемся в системе
-        self.service = build('sheets', 'v4', http = self.httpAuth) # Выбираем работу с таблицами и 4 версию API 
+        self.service = build('sheets', 'v4', http=self.httpAuth) # Выбираем работу с таблицами и 4 версию API 
+    
+    #ВОТ ВЫБОР ГРУПП
 
-    def create_new_table(self, name, sheet_name, rowCount : int, columnCount : int, email):
-        spreadsheet = self.service.spreadsheets().create(body = {
-            'properties': {'title': f'{name}', 'locale': 'ru_RU'},
-            'sheets': [{'properties': {'sheetType': 'GRID',
-                                    'sheetId': 0,
-                                    'title': f'{sheet_name}',
-                                    'gridProperties': {'rowCount': rowCount, 'columnCount': columnCount}}}]
-        }).execute()
-        spreadsheetId = spreadsheet['spreadsheetId'] # сохраняем идентификатор файла
-        print('https://docs.google.com/spreadsheets/d/' + spreadsheetId)
-        
-
-
-        driveService = apiclient.discovery.build('drive', 'v3', http = self.httpAuth) # Выбираем работу с Google Drive и 3 версию API
-        access = driveService.permissions().create(
-            fileId = spreadsheetId,
-            body = {'type': 'user', 'role': 'writer', 'emailAddress': f'{email}'},  # Открываем доступ на редактирование
-            fields = 'id'
-        ).execute()
-        
-        return spreadsheetId
-
-    def get_list_of_sheet(self):
-        spreadsheet = self.service.spreadsheets().get(spreadsheetId = self.spreadsheetId).execute()
-        sheetList = spreadsheet.get('sheets')
-        result = []
-        for sheet in sheetList:
-            result.append({sheet['properties']['title'] : sheetList[0]['properties']['sheetId']})
-
-        return result
+    def choose_sheet(self):
+        self.sheet_name = input("Введите имя листа (П или Е): ")
 
     def get_data(self):
+        if self.sheet_name is None:
+            self.choose_sheet()  # Запрос имени листа, если оно не указано
+
+        ranges = f"{self.sheet_name}!A1:AX50"  # Обновляем ranges на основе выбранного листа
+
         results = self.service.spreadsheets().values().batchGet(spreadsheetId=self.spreadsheetId,
-                                        ranges=self.ranges,
+                                        ranges=ranges,
                                         valueRenderOption='FORMATTED_VALUE',
                                         dateTimeRenderOption='FORMATTED_STRING').execute()
         sheet_values = results['valueRanges'][0]['values']
