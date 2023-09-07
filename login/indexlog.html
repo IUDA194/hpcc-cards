@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Форма входа</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        
+        #loginForm {
+            width: 350px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        label {
+            display: block;
+            text-align: left; /* Поместить текст метки слева */
+            margin-bottom: 10px;
+        }
+        
+        input[type="text"],
+        input[type="password"] {
+            width: 90%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        
+        button {
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        
+        button:hover {
+            background-color: #0056b3;
+        }
+        
+        #result {
+            margin-top: 10px;
+            font-weight: bold;
+            color: green;
+        }
+    </style>
+</head>
+<body>
+    <form id="loginForm">
+        <label for="login">Логин:</label>
+        <input type="text" id="login" name="login" required><br><br>
+
+        <label for="password">Пароль:</label>
+        <input type="password" id="password" name="password" required><br><br>
+
+        <button type="button" onclick="checkCredentials()">Войти</button>
+    </form>
+
+    <div id="result"></div>
+
+    <script>
+        function checkCredentials() {
+            // Получение значений логина и пароля из формы
+            const loginInput = document.getElementById("login").value;
+            const passwordInput = document.getElementById("password").value;
+
+            // Ваш JSON с данными для сравнения
+            const jsonData = {
+                "login": "root",
+                "password": "UYghidjacjqIuwfj13@doiasj"
+            };
+
+            // Проверка данных
+            if (loginInput === jsonData.login && passwordInput === jsonData.password) {
+                document.getElementById("result").innerHTML = "Вход выполнен успешно!";
+            } else {
+                document.getElementById("result").innerHTML = "Неправильный логин или пароль. Попробуйте снова.";
+            }
+        }
+    </script>
+</body>
+</html>
