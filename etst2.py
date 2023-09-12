@@ -11,11 +11,12 @@ from docxtpl import DocxTemplate
 
 # Загрузка документа
 table_ret = table()  # Создание экземпляра класса Table
-returned_dict = table_ret.get_data()  # Вызов метода get_data() на экземпляре table
+returned_dict = table_ret.get_data("Е")  # Вызов метода get_data() на экземпляре table
 
 # current_name = returned_dict.get('name')
 # print(current_name)
 # Перебор всех ключей и значений в словаре returned_dict
+
 
 for name, data in returned_dict.items():
     current_name = name
@@ -110,7 +111,6 @@ input_sol = current_navch5.split("; ")
 proga_lso = []
 for valsol in input_sol:
     proga_lso.append(valsol)
-print(proga_lso)
 # Загрузка документа
 doc = DocxTemplate("ref1.docx")
 

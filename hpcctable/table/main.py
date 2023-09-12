@@ -30,7 +30,8 @@ class table:
     def choose_sheet(self):
         self.sheet_name = input("Введите имя листа (П или Е): ")
 
-    def get_data(self, spreadsheetId):
+    def get_data(self, sheet : str = None):
+        self.sheet_name = sheet
         if self.sheet_name is None:
             self.choose_sheet()  # Запрос имени листа, если оно не указано
 
@@ -98,7 +99,5 @@ class table:
 
             
 
-tb = table()
-spreadsheetId = "1rbQe4whW1oz5EOnjjfhPMzmIme-4N9lx8o1hSzOtNgM"
-
-print(tb.get_data(spreadsheetId))
+#tb = table()
+#spreadsheetId = "1rbQe4whW1oz5EOnjjfhPMzmIme-4N9lx8o1hSzOtNgM"
