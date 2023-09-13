@@ -13,7 +13,7 @@ class table:
     service = None
     httpAuth = None
     credentials = None
-    sheet_name = NoneП
+    sheet_name = None
 
     def __init__(self) -> None:
         CREDENTIALS_FILE = self.path  # Имя файла с закрытым ключом, вы должны подставить свое
