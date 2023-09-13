@@ -16,7 +16,7 @@ returned_dict = table_ret.get_data("Е")  # Вызов метода get_data() �
 # current_name = returned_dict.get('name')
 # print(current_name)
 # Перебор всех ключей и значений в словаре returned_dict
-
+print(returned_dict)
 
 for name, data in returned_dict.items():
     current_name = name
@@ -71,6 +71,8 @@ years_list = []
 
 for value in split_values:
     years_list.append(value)
+
+print(years_list)
 
 input_string = current_pain_of_programming.split("; ")
 proga_list = []

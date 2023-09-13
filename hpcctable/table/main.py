@@ -35,7 +35,7 @@ class table:
         if self.sheet_name is None:
             self.choose_sheet()  # Запрос имени листа, если оно не указано
 
-        ranges = f"{self.sheet_name}!A1:AX50"  # Обновляем ranges на основе выбранного листа
+        ranges = f"{self.sheet_name}!A2:AX50"  # Обновляем ranges на основе выбранного листа
 
         results = self.service.spreadsheets().values().batchGet(spreadsheetId=self.spreadsheetId, ranges=ranges, valueRenderOption='FORMATTED_VALUE', dateTimeRenderOption='FORMATTED_STRING').execute()
 
